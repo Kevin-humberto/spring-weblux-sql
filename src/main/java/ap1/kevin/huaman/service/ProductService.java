@@ -13,4 +13,8 @@ public interface ProductService {
     Mono<Product> save(Product product);
 
     Mono<Product> update(Product product);
+
+    Mono<Product> deleteLogical(Long id);
+
+    Mono<Product> restoreLogical(Long id);
 }

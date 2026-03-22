@@ -34,9 +34,19 @@ public class ProductRest {
         return productService.save(product);
     }
 
-    @PutMapping ("/update")
+    @PutMapping("/update")
     public Mono<Product> update(@RequestBody Product product) {
         return productService.update(product);
+    }
+
+    @PatchMapping("/delete/{id}")
+    public Mono<Product> deleteLogical(@PathVariable Long id) {
+        return productService.deleteLogical(id);
+    }
+
+    @PatchMapping("/restore/{id}")
+    public Mono<Product> restoreLogical(@PathVariable Long id) {
+        return productService.restoreLogical(id);
     }
 
 }

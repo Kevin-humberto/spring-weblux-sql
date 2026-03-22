@@ -50,4 +50,27 @@ public class ProductServiceImpl implements ProductService {
                     return productRepository.save(product);
                 });
     }
+
+    @Override
+    public Mono<Product> deleteLogical(Long id) {
+        log.info("Eliminando lógicamente producto con ID {}", id);
+        return productRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Producto no encontrado")))
+                .flatMap(existing -> {
+                    existing.setState("I");
+                    return productRepository.save(existing);
+                });
+    }
+
+    @Override
+    public Mono<Product> restoreLogical(Long id) {
+        log.info("Restaurando lógicamente producto con ID {}", id);
+        return productRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Producto no encontrado")))
+                .flatMap(existing -> {
+                    existing.setState("A");
+                    return productRepository.save(existing);
+                });
+    }
+
 }
